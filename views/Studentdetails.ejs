@@ -1,0 +1,36 @@
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<body>
+<form action="/update/profile/info" method="post" id="login">
+  Name:<input id="first_name" name="first_name" type="text" />
+<button type="submit" class="submit-btn">Submit</button>
+</form>
+</body>
+</html>
+<script>
+$(document).ready(function(){
+alert("jquery");
+$('form#login').submit(function(){
+alert("inside");
+ var formData = $('form#login').serializeArray();
+//formData = jQuery.param(formData);
+
+console.log(formDate)
+
+$.ajax({
+//dataType : 'json',
+data : formData,
+success : function(data) {
+alert("sucess");
+return false;
+},
+error:function(data){
+alert("error");
+return false;
+}
+
+});
+
+});
+});
+</script>

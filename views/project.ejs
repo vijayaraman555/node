@@ -1,0 +1,42 @@
+<html>
+ <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+form#uploadForm {
+    position: absolute;
+    width: 20%;
+    left: 40%;
+    top: 50%;
+}
+.top
+{
+ margin-left: 500;
+ font-size: -webkit-xxx-large;
+    font-family: -webkit-body;
+    font: bold;
+    color: blue;
+}
+</style>
+ </head>
+   <body>
+      <div class = "top">
+    <header>PDF PAGE EDITOR</header> 
+    </div>
+        <form class="form" 
+            ref='uploadForm' 
+            id='uploadForm' 
+            action='/upload' 
+            method='post' 
+            encType="multipart/form-data">
+               <div class="form-group" align-text = "center">
+                <input type="file"class="form-control-file form-group"  name="sampleFile" />
+                <input type='submit' class="btn btn-primary" value='Upload!' />
+               </div>
+
+        </form>		
+    </body>
+</html>

@@ -1,0 +1,65 @@
+<html>
+  
+  <head>
+     <script src = "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+  </head>
+  
+  <body ng-app = "fupApp">
+
+     <div ng-controller = "fupController">
+        <input type = "file" file-model = "myFile"/>
+        <button ng-click = "uploadFile()">upload me</button>
+     </div>
+
+<script>
+   angular.module('fupApp', [])
+       .directive('ngFiles', ['$parse', function ($parse) {
+
+           function fn_link(scope, element, attrs) {
+               var onChange = $parse(attrs.ngFiles);
+               element.on('change', function (event) {
+                   onChange(scope, { $files: event.target.files });
+               });
+           };
+
+           return {
+               link: fn_link
+           }
+       } ])
+       .controller('fupController', function ($scope, $http) {
+
+           var formdata = new FormData();
+           $scope.getTheFiles = function ($files) {
+               angular.forEach($files, function (value, key) {
+                   formdata.append(key, value);
+               });
+           };
+
+$http.post("/upload")
+.then(function(response) {
+console.log(response);
+$scope.myWelcome = response.data;
+});
+           // NOW UPLOAD THE FILES.
+           $scope.uploadFiles = function () {
+
+               var request = {
+                   method: 'POST',
+                   url: '',
+                   data: formdata,
+                   headers: {
+                       'Content-Type': undefined
+                   }
+               };
+
+               // SEND THE FILES.
+               $http(request)
+                   .success(function (d) {
+                       alert(d);
+                   })
+                   .error(function () {
+                   });
+           }
+       });
+</script>
+</html>

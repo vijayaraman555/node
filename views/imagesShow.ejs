@@ -1,0 +1,66 @@
+<html>
+<head>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ 
+ <link rel="stylesheet" href="/stylesheets/image-picker.css">
+ <link rel="stylesheet" href="/stylesheets/modify.css">
+
+ </head>
+<body>
+<select multiple="multiple" class="image-picker show-html">
+<% for( var i in data ) {%>
+  <option class="img_<%= i %>" data-img-src="<%= (data[i].path).substring(8) %>" value="<%= (data[i].path).substring(8) %>">Page <%= i %></option>
+<!-- <img class="img_<%= i %>" src="<%= (data[i].path).substring(8) %>" width="100" height="100" /> -->
+<% } %>
+</select>
+<button type="button"  class="btn btn-success"id="check" >Generate PDF</button>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="/javascripts/image-picker.min.js"></script>
+<script>
+//$(function () {
+$("select").imagepicker();
+$('#check').click(function(){
+
+var selected = $('.image-picker').val();
+
+
+if(selected=="null"||selected==null||selected==undefined||selected=="undefined"){
+alert("Please pick atleast one image...");
+}else{
+var data={};
+var array=[];
+
+var values = [];
+$('.image-picker option:selected').each(function() { 
+  var path="./public"+$(this).attr('value');
+  values.push(path);
+});
+values=JSON.stringify(values);
+
+data.val=values;
+console.log(data);
+   $.ajax({
+    url:'/download',
+   type:'post',
+   data : data,
+   success : function(data) {		 
+    window.location.href = data;
+   },
+   error: function(data){ 
+   	alert(" Please try again");
+   }
+   
+   });
+        
+}
+
+
+});
+</script>
+</html>
+
+
+

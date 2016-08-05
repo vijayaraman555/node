@@ -1,0 +1,100 @@
+<html>
+<head><title>Donor Details</title>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+   
+  <div>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/">Home</a></li>
+        <li><a href="newblooddonor">NewDonor</a></li>
+        <li><a href="SearchDonor">SearchDonor</a></li>
+      </ul>
+    </div>
+</nav>
+
+<div class="jumbotron text-center">
+  <h1>Search Donors</h1>
+<form class="form-inline" method="post" action="/show/donor/info">
+    <label>
+               
+               <select  name="blood_group"  id="combo" required>
+                  <option value="" selected="selected">Select One</option>
+                 <option value="A+" >A+</option>
+                  <option value="A-" >A-</option>
+                  <option value="B+" >B+</option>
+                  <option value="B-" >B-</option>
+                  <option value="O+" >O+</option>
+                  <option value="O-" >O-</option>
+               </select>
+            </label>
+  
+  </form>
+</div>
+<div class="output">no result found</div>
+</body>
+</html>
+<script>
+$(document).ready(function(){ 
+  $('#combo').change(function(){ 
+
+//  alert("jq");
+   event.preventDefault();
+         
+   var data ={};
+data.search=$(this).val();
+  
+   $.ajax({
+   url:'/show/donor/info',
+   type:'post',
+   data : data,
+   success : function(data) {
+ //  alert("Success");
+   console.log(data.data);
+   if(data.flag==true){
+   //alert("You have registered successfully");
+
+//alert(data.length);
+   var result=data.data;
+  
+    
+    
+var content = "<table class='table table-bordered'><thead><tr><th>name</th><th>blood</th><th>address</th></tr></thead><tbody>"
+     for(i=0;i<result.length;i++){
+        content+=( '<tr><td>' + result[i].name + '</td>' );
+         content+=( '<td>' + result[i].blood+ '</td>' );
+          content+=( '<td>' + result[i].address + '</td></tr>' );
+    }
+    content+="</tbody></table>"
+
+     $('.output').html(content);
+//var string = "success";
+
+//$('.output').html(JSON.stringify(data.data));
+
+//var test ="[object Object];
+//new Object().toString() === "[object Object]"
+  // console.log(test);
+   }else{
+   alert("Registartion failed. Please try again");
+   }
+      
+   },
+   error: function(data){ 
+   	alert("Registartion failed. Please try again");
+   	
+   }
+   
+   });
+return false;
+        
+   
+   });
+   
+   });
+
+</script>
+

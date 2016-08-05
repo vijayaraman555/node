@@ -1,0 +1,123 @@
+<html>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+   <style>
+      html {
+      height: 100%;
+      background: white;
+      background: radial-gradient(circle, #fff 20%, #ccc);
+      background-size: cover;
+      }
+      form {
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 20px;
+      margin:0 auto;
+      }
+      input[type=text],[type=email],[type=number] {
+      width: 30%;
+      padding: 2px 2px;
+      margin: 4px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      box-sizing: border-box;
+      }
+      header {
+      background-color:blue;
+      color:white;
+      text-align:center;
+      padding:3px;
+      }
+   </style>
+   <body>
+      <header>
+         <h1>
+         TAXI BOOKING
+         <h1>
+      </header>
+      <form method="" action="" id="login">
+         <p>
+            <label>Name<br>
+            <input type="text" name="customer_name" pattern='[A-Za-z\\s]*' required="required">
+            </label> 
+         </p>
+         <p>
+            <label>Phone <br>
+            <input type="number" name="phone_number"  pattern="/(7|8|9)\d{9}/" required="required">
+            </label>
+         </p>
+         <p>
+            <label>Email <br>
+            <input type="email" name="email_address" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required>
+            </label>
+         </p>
+         <p>
+            <label>
+               Taxi Required <br>
+               <select id="Taxi_reqired" name="Taxi_reqired" required>
+                  <option value="" selected="selected">Select One</option>
+                  <option value="van" >van</option>
+                  <option value="car" >car</option>
+               </select>
+            </label>
+         </p>
+         <p>
+            <label>Pickup Date <br>
+            <input type="date" name="pickup_date" required>
+            </label>
+         </p>
+         <p>
+            <label>Pickup Time<br>
+            <input type="time" name="pickup_time" required>
+            </label>
+         </p>
+         <p>
+            <label>Pickup Place<br>
+            <input type="text" id="pickup_place" name="pickup_place" required>
+            </label> 
+         </p>
+         <p>
+            <label>Dropoff Place <br>
+            <input type="text"  id="dropoff_place" name="dropoff_place" required >
+            </label>
+         </p>
+         <p><button>Submit Booking</button></p>
+      </form>
+   </body>
+</html>
+<script>//AJAX CODE FOR BACKEND
+   $(document).ready(function(){
+   //alert("jquery");
+   
+   $('form#login' ).submit(function( event ) {
+   event.preventDefault();
+         
+   var formData = $('form#login').serializeArray();
+   
+   $.ajax({
+   url:'/update/profile/info',
+   type:'post',
+   dataType : 'json',
+   data : formData,
+   success : function(data) {
+   //alert("Success");
+   console.log(data);
+   if(data.flag==true){
+   alert("You have registered successfully . Your id is "+data.id);
+   }else{
+   alert("Registartion failed. Please try again");
+   }
+   window.location='/';
+   },
+   error: function(data){ 
+   	alert("Registartion failed. Please try again");
+   	window.location="/";
+   }
+   
+   });
+        return false;
+   
+   });
+   
+   });
+</script>

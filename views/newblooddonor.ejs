@@ -1,0 +1,111 @@
+<html>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> 
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+   <style>
+      html {
+      height: 100%;
+      background: white;
+      background: radial-gradient(circle, #fff 20%, #ccc);
+      background-size: cover;
+      }
+      form {
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 20px;
+      margin:0 auto;
+      }
+      input[type=text] {
+      width: 30%;
+      padding: 2px 2px;
+      margin: 4px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      box-sizing: border-box;
+      }
+      header {
+      background-color:blue;
+      color:white;
+      text-align:center;
+      padding:3px;
+      }
+   </style>
+   <body>
+ <nav class="navbar navbar-default navbar-fixed-top">
+   
+  <div>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/">Home</a></li>
+        <li><a href="newblooddonor">NewDonor</a></li>
+        <li><a href="SearchDonor">SearchDonor</a></li>
+      </ul>
+    </div>
+</nav>
+
+      <div class="jumbotron text-center">
+         <h1>
+          NEW BLOOD DONOR
+         <h1>
+      </div>
+      <form method="" action="" id="login">
+         <p>
+            <label>Name<br>
+            <input type="text" name="customer_name" pattern='[A-Za-z\\s]*' required="required">
+            </label> 
+         </p>
+         <p>
+            <label>
+               BLOOD GROUP <br>
+               <select  name="blood_group" required>
+                  <option value="" selected="selected">Select One</option>
+                  <option value="A+" >A+</option>
+                  <option value="A-" >A-</option>
+                  <option value="B+" >B+</option>
+                  <option value="B-" >B-</option>
+                  <option value="O+" >O+</option>
+                  <option value="O-" >O-</option>
+              
+               </select>
+            </label>
+         </p>
+         <p>
+            <label>ADDRESS<br>
+            <input type="text" name="customer_address" required>
+            </label>
+         </p>
+        <p><button>Submit Booking</button></p>
+      </form>
+   </body>
+</html>
+<script>//AJAX CODE FOR BACKEND
+   $(document).ready(function(){
+   alert("jquery");
+   
+   $('form#login' ).submit(function( event ) {
+   event.preventDefault();
+         
+   var formData = $('form#login').serializeArray();
+   
+   $.ajax({
+   url:'/update/donor/info',
+   type:'post',
+   dataType : 'json',
+   data : formData,
+   success : function(data) {
+   alert("Success");
+   //console.log(data);
+   window.location="/";
+   },
+   error: function(data){ 
+   	alert("Registartion failed. Please try again");
+   	 window.location="/";
+   }
+   
+   });
+        
+   
+   });
+   
+   });
+</script>
